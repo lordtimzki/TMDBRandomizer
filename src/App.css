@@ -51,6 +51,7 @@ h1 {
   background: -webkit-linear-gradient(#89cda4, #11b6dd);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 0px;
 }
 .main {
   padding: 30px;
@@ -95,6 +96,9 @@ h1 {
   align-items: center;
 }
 
-Button {
-  font-family: "Source Sans 3", sans-serif;
+.listing-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
