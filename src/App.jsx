@@ -9,6 +9,7 @@ function App() {
   const [apiData, setApiData] = useState(null);
   const [banList, setBanList] = useState([]);
   const [seenList, setSeenList] = useState([]);
+
   const callAPI = async (query) => {
     try {
       const withoutGenres = banList.map((genre) => genre.id).join(",");
@@ -31,12 +32,14 @@ function App() {
     }
   };
 
-  const handleGenreClick = (genre) => {
+  const handleBanClick = (item) => {
     setBanList((prevBanList) => {
-      if (!prevBanList.some((g) => g.id === genre.id)) {
-        return [...prevBanList, genre];
+      if (!prevBanList.some((g) => g.id === item.id && g.type === item.type)) {
+        return [...prevBanList, item];
       }
-      return prevBanList.filter((g) => g.id !== genre.id);
+      return prevBanList.filter(
+        (g) => g.id !== item.id || g.type !== item.type
+      );
     });
   };
 
@@ -49,7 +52,8 @@ function App() {
           <Entry
             className="listing-container"
             data={apiData}
-            onGenreClick={handleGenreClick}
+            onGenreClick={handleBanClick}
+            onCompanyClick={handleBanClick}
           />
         )}
         <Button
@@ -78,15 +82,14 @@ function App() {
       <div className="ban">
         <h2>Ban List</h2>
         <ul>
-          {" "}
-          {banList.map((genre, index) => (
+          {banList.map((item, index) => (
             <Button
               key={index}
               variant="outlined"
               sx={{ margin: "5px" }}
-              onClick={() => handleGenreClick(genre)}
+              onClick={() => handleBanClick(item)}
             >
-              {genre.name}
+              {item.name}
             </Button>
           ))}
         </ul>
