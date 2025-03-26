@@ -8,12 +8,14 @@ const ACCESS_KEY = import.meta.env.VITE_ACCESS_KEY;
 function App() {
   const [apiData, setApiData] = useState(null);
   const [banList, setBanList] = useState([]);
+  const [seenList, setSeenList] = useState([]);
   const callAPI = async (query) => {
     try {
+      const withoutGenres = banList.map((genre) => genre.id).join(",");
       const res = await axios.get(
         `https://api.themoviedb.org/3/discover/movie?api_key=${ACCESS_KEY}&sort_by=popularity.desc&page=${
           Math.floor(Math.random() * 500) + 1
-        }`
+        }&without_genres=${withoutGenres}&include_adults=false`
       );
       const selectIndex = Math.floor(Math.random() * 20);
       const selection = await axios.get(
@@ -21,18 +23,23 @@ function App() {
       );
       setApiData(selection.data);
       console.log(selection.data);
+      if (!seenList.some((movie) => movie.id === selection.data.id)) {
+        setSeenList((prevSeenList) => [...prevSeenList, selection.data]);
+      }
     } catch (error) {
       console.error("error fetching data", error);
     }
   };
+
   const handleGenreClick = (genre) => {
     setBanList((prevBanList) => {
       if (!prevBanList.some((g) => g.id === genre.id)) {
         return [...prevBanList, genre];
       }
-      return prevBanList;
+      return prevBanList.filter((g) => g.id !== genre.id);
     });
   };
+
   return (
     <>
       <div className="main">
@@ -55,13 +62,32 @@ function App() {
       </div>
       <div className="seen">
         <h2>What have we seen so far?</h2>
+        <ul>
+          {seenList.map((movie, index) => (
+            <div>
+              {" "}
+              <img
+                src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
+                alt={movie.title}
+              />
+              <li key={index}>{movie.title}</li>
+            </div>
+          ))}
+        </ul>
       </div>
       <div className="ban">
         <h2>Ban List</h2>
         <ul>
           {" "}
           {banList.map((genre, index) => (
-            <li key={index}>{genre.name}</li>
+            <Button
+              key={index}
+              variant="outlined"
+              sx={{ margin: "5px" }}
+              onClick={() => handleGenreClick(genre)}
+            >
+              {genre.name}
+            </Button>
           ))}
         </ul>
       </div>

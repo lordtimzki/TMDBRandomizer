@@ -102,3 +102,14 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+
+.seen ul,
+.ban ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.seen li,
+.ban li {
+  margin-bottom: 10px;
+}
