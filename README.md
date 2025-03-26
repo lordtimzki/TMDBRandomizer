@@ -27,7 +27,7 @@ The following **optional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+[Video Walkthrough](https://i.ibb.co/sBTGz8f/Kapture-2025-03-25-at-23-11-48.gif)
 
 <!-- Replace this with whatever GIF tool you used! -->
 
@@ -40,7 +40,7 @@ GIF created with Kap
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+The endpoints are really a pain in the butt as it was kind of hard to meet the attribute requirement without going through another endpoint.
 
 ## License
 
